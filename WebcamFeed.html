@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Webcam Feed</title>
+
+    <script src="/json.js"></script> <!-- for ie -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <link href="layout.css" rel="stylesheet" type="text/css"/>
+    <link href="jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="jquery.js"></script>
+    <script src="jquery-ui.min.js"></script>
+    <script src="jquery.flot.js"></script>
+    <script src="jquery.flot.navigate.js"></script>
+    <script src="WebcamFeedClient.js"></script>
+  </head>
+
+  <body>
+
+    Use camera at:<br />
+    /dev/video<input id="camnum" type="text" value="" style="text-align:right;width:3cm" /><br />
+    <button id="setcam" onClick='setcam()'>Set Cam</button>
+    <button id="launchstream">Launch Stream</button><br />
+
+    <p>
+
+        <a href="http://beagleboard.org" target="_blank">
+        <img src="beagle-hd-logo.gif" width=200 align="right"></a>
+        <div><p id="status">Waiting for input</p></div>
+        <a href="http://www.ti.com/sitara" target="_blank">
+        <img src="hdr_ti_logo.gif" width=200 align="right"></a>
+        <div><p id="message">message</p></div> 
+
+    <p/>
+
+    <script>
+        connect();
+
+        function setcam() {
+            //document.videoplayer.stop();
+            socket.emit('setcam', document.getElementById('camnum').value);
+        }
+    </script>
+
+    <embed
+         type="application/x-vlc-plugin"
+         name="videoplayer"
+         autoplay="yes" loop="no" hidden="no"
+         width="320" height="240"
+         target="tcp://192.168.1.113:8080" />
+    <br />
+  </body>
+</html>
